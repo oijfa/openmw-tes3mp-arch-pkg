@@ -1,23 +1,27 @@
-From bfddf383f8a2980908cb22dbec0290349ca3b519 Mon Sep 17 00:00:00 2001
+From 535d1ce8c6f234b0227b633072e3fc76fa329af2 Mon Sep 17 00:00:00 2001
 From: icdts <icandothings@gmail.com>
-Date: Sun, 9 Jul 2017 14:58:53 -0500
-Subject: [PATCH 1/1] CMakeList openmw tes3mp
+Date: Sun, 9 Jul 2017 17:15:38 -0500
+Subject: [PATCH] CMakeList openmw tes3mp
 
 ---
- CMakeLists.txt | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ CMakeLists.txt                        | 15 +++++++++------
+ components/process/processinvoker.cpp | 10 ++++++----
+ 2 files changed, 15 insertions(+), 10 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 1b3a7f557..e391d20f6 100644
+index 1b3a7f557..6b1aeb90e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -397,13 +397,13 @@ IF(NOT WIN32 AND NOT APPLE)
+@@ -397,13 +397,16 @@ IF(NOT WIN32 AND NOT APPLE)
  
      # Install binaries
      IF(BUILD_OPENMW)
 -        INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/openmw" DESTINATION "${BINDIR}" )
 +        INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/tes3mp" DESTINATION "${BINDIR}" )
      ENDIF(BUILD_OPENMW)
++    IF(BUILD_OPENMW_MP)
++        INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/tes3mp-server" DESTINATION "${BINDIR}" )
++    ENDIF(BUILD_OPENMW_MP)
      IF(BUILD_LAUNCHER)
          INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/openmw-launcher" DESTINATION "${BINDIR}" )
      ENDIF(BUILD_LAUNCHER)
@@ -27,7 +31,7 @@ index 1b3a7f557..e391d20f6 100644
      ENDIF(BUILD_BROWSER)
      IF(BUILD_BSATOOL)
          INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/bsatool" DESTINATION "${BINDIR}" )
-@@ -448,10 +448,10 @@ IF(NOT WIN32 AND NOT APPLE)
+@@ -448,10 +451,10 @@ IF(NOT WIN32 AND NOT APPLE)
      INSTALL(FILES "${OpenMW_BINARY_DIR}/resources/version" DESTINATION "${SYSCONFDIR}" COMPONENT "openmw")
      INSTALL(FILES "${OpenMW_BINARY_DIR}/gamecontrollerdb.txt" DESTINATION "${SYSCONFDIR}" COMPONENT "openmw")
  
@@ -42,6 +46,50 @@ index 1b3a7f557..e391d20f6 100644
  
      IF(BUILD_OPENCS)
          INSTALL(FILES "${OpenMW_BINARY_DIR}/openmw-cs.cfg" DESTINATION "${SYSCONFDIR}" COMPONENT "opencs")
+diff --git a/components/process/processinvoker.cpp b/components/process/processinvoker.cpp
+index cc842fd61..6803d48df 100644
+--- a/components/process/processinvoker.cpp
++++ b/components/process/processinvoker.cpp
+@@ -8,6 +8,7 @@
+ #include <QDir>
+ #include <QDebug>
+ #include <QCoreApplication>
++#include <QStandardPaths>
+ 
+ Process::ProcessInvoker::ProcessInvoker()
+ {
+@@ -66,10 +67,11 @@ bool Process::ProcessInvoker::startProcess(const QString &name, const QStringLis
+     QDir dir(QCoreApplication::applicationDirPath());
+     path = dir.absoluteFilePath(name);
+ #else
+-    path.prepend(QLatin1String("./"));
++    //path.prepend(QLatin1String("./"));
++    QString absolutePath = QStandardPaths::findExecutable(path);
+ #endif
+ 
+-    QFileInfo info(path);
++    QFileInfo info(absolutePath);
+ 
+     if (!info.exists()) {
+         QMessageBox msgBox;
+@@ -97,7 +99,7 @@ bool Process::ProcessInvoker::startProcess(const QString &name, const QStringLis
+ 
+     // Start the executable
+     if (detached) {
+-        if (!mProcess->startDetached(path, arguments)) {
++        if (!mProcess->startDetached(absolutePath, arguments)) {
+             QMessageBox msgBox;
+             msgBox.setWindowTitle(tr("Error starting executable"));
+             msgBox.setIcon(QMessageBox::Critical);
+@@ -110,7 +112,7 @@ bool Process::ProcessInvoker::startProcess(const QString &name, const QStringLis
+             return false;
+         }
+     } else {
+-        mProcess->start(path, arguments);
++        mProcess->start(absolutePath, arguments);
+ 
+         /*
+         if (!mProcess->waitForFinished()) {
 -- 
 2.13.2
 
