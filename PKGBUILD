@@ -17,12 +17,7 @@ provides=("${pkgname%-git}")
 source=('git://github.com/TES3MP/openmw-tes3mp.git')
 sha1sums=('SKIP')
 
-pkgver() {
-  cd "${srcdir}/${pkgname}"
-  git describe --always | sed 's|openmw-tes3mp-\([0-9]\+.[0-9]\+.[0-9]\+\)|\1|' | sed 's|-|.|g'
-}
-
-build() {
+prepare() {
   #Setup dependencies
   DEPENDENCIES="${srcdir}/${pkgname}"/dependencies
   CALLFF_LOCATION="${DEPENDENCIES}"/callff
@@ -40,11 +35,24 @@ build() {
       git clone https://github.com/Koncord/CallFF "${DEPENDENCIES}/"callff --depth 1
   fi
 
+  #Apply patch
+  cd "${srcdir}/${pkgname}"
+  git apply < "${srcdir}"/../0001-CMakeList-openmw-tes3mp.patch
+}
+
+pkgver() {
+  cd "${srcdir}/${pkgname}"
+  git describe --always | sed 's|openmw-tes3mp-\([0-9]\+.[0-9]\+.[0-9]\+\)|\1|' | sed 's|-|.|g'
+}
+
+build() {
+  CORES="$(cat /proc/cpuinfo | awk '/^processor/{print $3}' | wc -l)"
+
   echo -e ">> Building CallFF"
   mkdir -p "${CALLFF_LOCATION}"/build
   cd "${CALLFF_LOCATION}"/build
   cmake ..
-  make
+  make -j$CORES
 
   echo -e ">> Building OpenMW"
   cd "${srcdir}/${pkgname}"
@@ -55,12 +63,7 @@ build() {
       #-DCMAKE_CXX_FLAGS=\"-std=c++14\" \
       #-DCMAKE_BUILD_TYPE=RelWithDebInfo \
       #-DDESIRED_QT_VERSION=5 \
-      #-DRakNet_LIBRARY_RELEASE="/usr/include/raknet/libRakNetLibStatic.a" \
-      #-DRakNet_LIBRARY_DEBUG="/usr/include/raknet/libRakNetLibStatic.a" \
-      #-DRakNet_INCLUDES="/usr/include" \
-      #-DTerra_INCLUDES="/usr/include/terra" \
-
-  make
+  make -j$CORES
 }
 
 package() {

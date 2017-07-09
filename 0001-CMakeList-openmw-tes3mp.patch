@@ -1,0 +1,25 @@
+From cf7a505bfb074e73f23dd36b1f7aed00f3a7bcf7 Mon Sep 17 00:00:00 2001
+From: icdts <icandothings@gmail.com>
+Date: Sun, 9 Jul 2017 13:36:11 -0500
+Subject: [PATCH 1/1] CMakeList openmw -> tes3mp
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1b3a7f557..b10ad30c9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -397,7 +397,7 @@ IF(NOT WIN32 AND NOT APPLE)
+ 
+     # Install binaries
+     IF(BUILD_OPENMW)
+-        INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/openmw" DESTINATION "${BINDIR}" )
++        INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/tes3mp" DESTINATION "${BINDIR}" )
+     ENDIF(BUILD_OPENMW)
+     IF(BUILD_LAUNCHER)
+         INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/openmw-launcher" DESTINATION "${BINDIR}" )
+-- 
+2.13.2
+
