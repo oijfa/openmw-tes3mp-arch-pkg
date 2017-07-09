@@ -58,7 +58,8 @@ build() {
   cd "${srcdir}/${pkgname}"
   cmake -Wno-dev -DCMAKE_INSTALL_PREFIX=/usr \
       -DCallFF_LIBRARY="${CALLFF_LOCATION}"/build/src/libcallff.a \
-      -DCallFF_INCLUDES="${CALLFF_LOCATION}"/include
+      -DCallFF_INCLUDES="${CALLFF_LOCATION}"/include \
+      -DBUILD_OPENCS=OFF
       #-DCMAKE_CXX_STANDARD=14 \
       #-DCMAKE_CXX_FLAGS=\"-std=c++14\" \
       #-DCMAKE_BUILD_TYPE=RelWithDebInfo \
