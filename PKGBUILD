@@ -11,8 +11,8 @@ license=('GPL3' 'MIT' 'custom')
 
 depends=('openal' 'openscenegraph' 'mygui>=3.2.1' 'bullet' 'qt5-base' 'ffmpeg' 'sdl2' 'unshield' 'libxkbcommon-x11' 'raknet-git' 'terra-git' 'libtinfo')
 makedepends=('git' 'cmake' 'boost')
-conflicts=("${pkgname%-git}")
-provides=("${pkgname%-git}")
+conflicts=("${pkgname%-git}" 'openmw')
+provides=("${pkgname%-git}" 'openmw')
 
 source=('git://github.com/TES3MP/openmw-tes3mp.git')
 sha1sums=('SKIP')
