@@ -1,14 +1,14 @@
-From 2ea9f61aa9edb221f688823f16dc9087f7e6434a Mon Sep 17 00:00:00 2001
+From bfddf383f8a2980908cb22dbec0290349ca3b519 Mon Sep 17 00:00:00 2001
 From: icdts <icandothings@gmail.com>
-Date: Sun, 9 Jul 2017 14:13:56 -0500
+Date: Sun, 9 Jul 2017 14:58:53 -0500
 Subject: [PATCH 1/1] CMakeList openmw tes3mp
 
 ---
- CMakeLists.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ CMakeLists.txt | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 1b3a7f557..4e659f1b4 100644
+index 1b3a7f557..e391d20f6 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -397,13 +397,13 @@ IF(NOT WIN32 AND NOT APPLE)
@@ -27,6 +27,21 @@ index 1b3a7f557..4e659f1b4 100644
      ENDIF(BUILD_BROWSER)
      IF(BUILD_BSATOOL)
          INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/bsatool" DESTINATION "${BINDIR}" )
+@@ -448,10 +448,10 @@ IF(NOT WIN32 AND NOT APPLE)
+     INSTALL(FILES "${OpenMW_BINARY_DIR}/resources/version" DESTINATION "${SYSCONFDIR}" COMPONENT "openmw")
+     INSTALL(FILES "${OpenMW_BINARY_DIR}/gamecontrollerdb.txt" DESTINATION "${SYSCONFDIR}" COMPONENT "openmw")
+ 
+-    INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-client-default" DESTINATION "${SYSCONFDIR}" COMPONENT "openmw")
+-    INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-client.install" DESTINATION "${SYSCONFDIR}" RENAME "tes3mp-client.cfg" COMPONENT "openmw")
+-    INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-server-default" DESTINATION "${SYSCONFDIR}" COMPONENT "openmw-mp")
+-    INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-server.install" DESTINATION "${SYSCONFDIR}" RENAME "tes3mp-server.cfg" COMPONENT "openmw-mp")
++    INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-client-default.cfg" DESTINATION "${SYSCONFDIR}" COMPONENT "openmw")
++    #INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-client.install" DESTINATION "${SYSCONFDIR}" RENAME "tes3mp-client.cfg" COMPONENT "openmw")
++    INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-server-default.cfg" DESTINATION "${SYSCONFDIR}" COMPONENT "openmw-mp")
++    #INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-server.install" DESTINATION "${SYSCONFDIR}" RENAME "tes3mp-server.cfg" COMPONENT "openmw-mp")
+ 
+     IF(BUILD_OPENCS)
+         INSTALL(FILES "${OpenMW_BINARY_DIR}/openmw-cs.cfg" DESTINATION "${SYSCONFDIR}" COMPONENT "opencs")
 -- 
 2.13.2
 
