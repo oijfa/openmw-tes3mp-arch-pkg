@@ -1,2 +1,4 @@
 openmw-tes3mp
 src
+pkg
+*.tar.xz
