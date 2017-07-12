@@ -1,20 +1,18 @@
-# Maintainer: Sandy Carter <bwrsandman@gmail.com>
-# PKGBUILD source: https://github.com/bwrsandman/pkgbuild/tree/master/openmw-git
+# PKGBUILD source: https://github.com/oijfa/openmw-tes3mp-arch-pkg
 
 pkgname=openmw-tes3mp
-pkgver=openmw.0.39.0.3210.g4e74910fd
+pkgver=0.6.5774023
 pkgrel=1
 pkgdesc="An open-source engine reimplementation for the role-playing game Morrowind with multiplayer support."
 arch=('i686' 'x86_64')
 url="http://www.openmw.org"
 license=('GPL3' 'MIT' 'custom')
 
-depends=('openal' 'openscenegraph' 'mygui>=3.2.1' 'bullet' 'qt5-base' 'ffmpeg' 'sdl2' 'unshield' 'libxkbcommon-x11' 'raknet-git' 'terra-git' 'libtinfo')
+depends=('openal' 'openscenegraph' 'mygui>=3.2.1' 'bullet' 'qt5-base' 'ffmpeg' 'sdl2' 'unshield' 'libxkbcommon-x11' 'raknet-git' 'terra-git' 'libtinfo') #add openmw after conflicts resolved
 makedepends=('git' 'cmake' 'boost')
-conflicts=("${pkgname%-git}" 'openmw')
-provides=("${pkgname%-git}" 'openmw')
 
 source=('git://github.com/TES3MP/openmw-tes3mp.git')
+#source=("${pkgname}::https://github.com/TES3MP/openmw-tes3mp.git#tag=tes3mp-0.5.1")
 sha1sums=('SKIP')
 
 prepare() {
@@ -59,11 +57,17 @@ build() {
   cmake -Wno-dev -DCMAKE_INSTALL_PREFIX=/usr \
       -DCallFF_LIBRARY="${CALLFF_LOCATION}"/build/src/libcallff.a \
       -DCallFF_INCLUDES="${CALLFF_LOCATION}"/include \
-      -DBUILD_OPENCS=OFF
-      #-DCMAKE_CXX_STANDARD=14 \
-      #-DCMAKE_CXX_FLAGS=\"-std=c++14\" \
-      #-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-      #-DDESIRED_QT_VERSION=5 \
+      -DBUILD_OPENMW=ON \
+      -DBUILD_BROWSER=ON \
+      -DBUILD_MYGUI_PLUGIN=ON \
+      -DBUILD_OPENMW_MP=OFF \
+      -DBUILD_OPENCS=OFF \
+      -DBUILD_BSATOOL=OFF \
+      -DBUILD_ESMTOOL=OFF \
+      -DBUILD_ESSIMPORTER=OFF \
+      -DBUILD_LAUNCHER=OFF \
+      -DBUILD_MWINIIMPORTER=OFF \
+      -DBUILD_WIZARD=OFF"
   make -j$CORES
 }
 
