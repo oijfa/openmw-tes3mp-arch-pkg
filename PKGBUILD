@@ -67,7 +67,7 @@ build() {
       -DBUILD_ESSIMPORTER=OFF \
       -DBUILD_LAUNCHER=OFF \
       -DBUILD_MWINIIMPORTER=OFF \
-      -DBUILD_WIZARD=OFF"
+      -DBUILD_WIZARD=OFF
   make -j$CORES
 }
 
