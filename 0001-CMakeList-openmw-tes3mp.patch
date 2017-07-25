@@ -1,95 +1,73 @@
-From 535d1ce8c6f234b0227b633072e3fc76fa329af2 Mon Sep 17 00:00:00 2001
-From: icdts <icandothings@gmail.com>
-Date: Sun, 9 Jul 2017 17:15:38 -0500
-Subject: [PATCH] CMakeList openmw tes3mp
-
----
- CMakeLists.txt                        | 15 +++++++++------
- components/process/processinvoker.cpp | 10 ++++++----
- 2 files changed, 15 insertions(+), 10 deletions(-)
-
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 1b3a7f557..6b1aeb90e 100644
+index 1b3a7f557..3e83f9f41 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -397,13 +397,16 @@ IF(NOT WIN32 AND NOT APPLE)
+@@ -102,15 +102,15 @@ elseif(UNIX)
+     SET(LIBDIR "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}" CACHE PATH "Where to install libraries")
+     SET(DATAROOTDIR "${CMAKE_INSTALL_PREFIX}/share" CACHE PATH "Sets the root of data directories to a non-default location")
+     SET(GLOBAL_DATA_PATH "${DATAROOTDIR}/games/" CACHE PATH "Set data path prefix")
+-    SET(DATADIR "${GLOBAL_DATA_PATH}/openmw" CACHE PATH "Sets the openmw data directories to a non-default location")
++    SET(DATADIR "${GLOBAL_DATA_PATH}/tes3mp" CACHE PATH "Sets the openmw data directories to a non-default location")
+     SET(ICONDIR "${DATAROOTDIR}/pixmaps" CACHE PATH "Set icon dir")
+-    SET(LICDIR "${DATAROOTDIR}/licenses/openmw" CACHE PATH "Sets the openmw license directory to a non-default location.")
++    SET(LICDIR "${DATAROOTDIR}/licenses/tes3mp" CACHE PATH "Sets the openmw license directory to a non-default location.")
+     IF("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr")
+         SET(GLOBAL_CONFIG_PATH "/etc/" CACHE PATH "Set config dir prefix")
+     ELSE()
+         SET(GLOBAL_CONFIG_PATH "${CMAKE_INSTALL_PREFIX}/etc/" CACHE PATH "Set config dir prefix")
+     ENDIF()
+-    SET(SYSCONFDIR "${GLOBAL_CONFIG_PATH}/openmw" CACHE PATH "Set config dir")
++    SET(SYSCONFDIR "${GLOBAL_CONFIG_PATH}/tes3mp" CACHE PATH "Set config dir")
  
-     # Install binaries
-     IF(BUILD_OPENMW)
--        INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/openmw" DESTINATION "${BINDIR}" )
-+        INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/tes3mp" DESTINATION "${BINDIR}" )
-     ENDIF(BUILD_OPENMW)
-+    IF(BUILD_OPENMW_MP)
-+        INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/tes3mp-server" DESTINATION "${BINDIR}" )
-+    ENDIF(BUILD_OPENMW_MP)
-     IF(BUILD_LAUNCHER)
-         INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/openmw-launcher" DESTINATION "${BINDIR}" )
-     ENDIF(BUILD_LAUNCHER)
-     IF(BUILD_BROWSER)
--        INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/openmw-browser" DESTINATION "${BINDIR}" )
-+        INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/tes3mp-browser" DESTINATION "${BINDIR}" )
-     ENDIF(BUILD_BROWSER)
-     IF(BUILD_BSATOOL)
-         INSTALL(PROGRAMS "${OpenMW_BINARY_DIR}/bsatool" DESTINATION "${BINDIR}" )
-@@ -448,10 +451,10 @@ IF(NOT WIN32 AND NOT APPLE)
-     INSTALL(FILES "${OpenMW_BINARY_DIR}/resources/version" DESTINATION "${SYSCONFDIR}" COMPONENT "openmw")
-     INSTALL(FILES "${OpenMW_BINARY_DIR}/gamecontrollerdb.txt" DESTINATION "${SYSCONFDIR}" COMPONENT "openmw")
+     set(MORROWIND_DATA_FILES "${DATADIR}/data" CACHE PATH "location of Morrowind data files")
+     set(OPENMW_RESOURCE_FILES "${DATADIR}/resources" CACHE PATH "location of OpenMW resources files")
+@@ -435,8 +435,8 @@ IF(NOT WIN32 AND NOT APPLE)
  
--    INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-client-default" DESTINATION "${SYSCONFDIR}" COMPONENT "openmw")
--    INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-client.install" DESTINATION "${SYSCONFDIR}" RENAME "tes3mp-client.cfg" COMPONENT "openmw")
--    INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-server-default" DESTINATION "${SYSCONFDIR}" COMPONENT "openmw-mp")
--    INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-server.install" DESTINATION "${SYSCONFDIR}" RENAME "tes3mp-server.cfg" COMPONENT "openmw-mp")
-+    INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-client-default.cfg" DESTINATION "${SYSCONFDIR}" COMPONENT "openmw")
-+    #INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-client.install" DESTINATION "${SYSCONFDIR}" RENAME "tes3mp-client.cfg" COMPONENT "openmw")
-+    INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-server-default.cfg" DESTINATION "${SYSCONFDIR}" COMPONENT "openmw-mp")
-+    #INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp-server.install" DESTINATION "${SYSCONFDIR}" RENAME "tes3mp-server.cfg" COMPONENT "openmw-mp")
- 
+     # Install icon and desktop file
+     INSTALL(FILES "${OpenMW_BINARY_DIR}/openmw.desktop" DESTINATION "${DATAROOTDIR}/applications" COMPONENT "openmw")
+-    INSTALL(FILES "${OpenMW_SOURCE_DIR}/files/launcher/images/openmw.png" DESTINATION "${ICONDIR}" COMPONENT "openmw")
+-    INSTALL(FILES "${OpenMW_BINARY_DIR}/openmw.appdata.xml" DESTINATION "${DATAROOTDIR}/appdata" COMPONENT "openmw")
++    INSTALL(FILES "${OpenMW_SOURCE_DIR}/files/launcher/images/tes3mp.png" DESTINATION "${ICONDIR}" COMPONENT "openmw")
++    INSTALL(FILES "${OpenMW_BINARY_DIR}/tes3mp.appdata.xml" DESTINATION "${DATAROOTDIR}/appdata" COMPONENT "openmw")
      IF(BUILD_OPENCS)
-         INSTALL(FILES "${OpenMW_BINARY_DIR}/openmw-cs.cfg" DESTINATION "${SYSCONFDIR}" COMPONENT "opencs")
-diff --git a/components/process/processinvoker.cpp b/components/process/processinvoker.cpp
-index cc842fd61..6803d48df 100644
---- a/components/process/processinvoker.cpp
-+++ b/components/process/processinvoker.cpp
-@@ -8,6 +8,7 @@
- #include <QDir>
- #include <QDebug>
- #include <QCoreApplication>
-+#include <QStandardPaths>
- 
- Process::ProcessInvoker::ProcessInvoker()
- {
-@@ -66,10 +67,11 @@ bool Process::ProcessInvoker::startProcess(const QString &name, const QStringLis
-     QDir dir(QCoreApplication::applicationDirPath());
-     path = dir.absoluteFilePath(name);
- #else
--    path.prepend(QLatin1String("./"));
-+    //path.prepend(QLatin1String("./"));
-+    QString absolutePath = QStandardPaths::findExecutable(path);
- #endif
- 
--    QFileInfo info(path);
-+    QFileInfo info(absolutePath);
- 
-     if (!info.exists()) {
-         QMessageBox msgBox;
-@@ -97,7 +99,7 @@ bool Process::ProcessInvoker::startProcess(const QString &name, const QStringLis
- 
-     // Start the executable
-     if (detached) {
--        if (!mProcess->startDetached(path, arguments)) {
-+        if (!mProcess->startDetached(absolutePath, arguments)) {
-             QMessageBox msgBox;
-             msgBox.setWindowTitle(tr("Error starting executable"));
-             msgBox.setIcon(QMessageBox::Critical);
-@@ -110,7 +112,7 @@ bool Process::ProcessInvoker::startProcess(const QString &name, const QStringLis
-             return false;
-         }
-     } else {
--        mProcess->start(path, arguments);
-+        mProcess->start(absolutePath, arguments);
- 
-         /*
-         if (!mProcess->waitForFinished()) {
--- 
-2.13.2
-
+         INSTALL(FILES "${OpenMW_BINARY_DIR}/openmw-cs.desktop" DESTINATION "${DATAROOTDIR}/applications" COMPONENT "opencs")
+         INSTALL(FILES "${OpenMW_SOURCE_DIR}/files/opencs/openmw-cs.png" DESTINATION "${ICONDIR}" COMPONENT "opencs")
+diff --git a/files/tes3mp.appdata.xml b/files/tes3mp.appdata.xml
+index 1c16cb9a4..d5214909d 100644
+--- a/files/tes3mp.appdata.xml
++++ b/files/tes3mp.appdata.xml
+@@ -1,10 +1,10 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <!-- Copyright 2015 Alexandre Moine <nobrakal@gmail.com> -->
+ <application>
+- <id type="desktop">openmw.desktop</id>
++ <id type="desktop">tes3mp.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license> GPL-3.0 and MIT and zlib</project_license>
+- <name>OpenMW</name>
++ <name>tes3mp</name>
+  <summary>Unofficial open source engine re-implementation of the game Morrowind</summary>
+  <description>
+   <p>
+diff --git a/files/tes3mp.desktop b/files/tes3mp.desktop
+index 36d01b33e..b5484dcc0 100644
+--- a/files/tes3mp.desktop
++++ b/files/tes3mp.desktop
+@@ -1,10 +1,10 @@
+ [Desktop Entry]
+ Type=Application
+-Name=OpenMW Launcher
++Name=tes3mp Browser
+ GenericName=Role Playing Game
+-Comment=An engine replacement for The Elder Scrolls III: Morrowind
+-Keywords=Morrowind;Reimplementation Mods;esm;bsa;
+-TryExec=openmw-launcher
+-Exec=openmw-launcher
+-Icon=openmw
+-Categories=Game;RolePlaying;
++Comment=A multiplayer engine replacement for The Elder Scrolls III: Morrowind
++Keywords=Morrowind;Reimplementation Mods;esm;bsa;multiplayer
++TryExec=tes3mp-browser
++Exec=tes3mp-browser
++Icon=tes3mp
++Categories=Game;RolePlaying;Multiplayer

@@ -1,7 +1,7 @@
 # PKGBUILD source: https://github.com/oijfa/openmw-tes3mp-arch-pkg
 
 pkgname=openmw-tes3mp
-pkgver=0.6.5774023
+pkgver=openmw.0.39.0.3225.gad9fa0631
 pkgrel=1
 pkgdesc="An open-source engine reimplementation for the role-playing game Morrowind with multiplayer support."
 arch=('i686' 'x86_64')
@@ -59,7 +59,7 @@ build() {
       -DCallFF_INCLUDES="${CALLFF_LOCATION}"/include \
       -DBUILD_OPENMW=ON \
       -DBUILD_BROWSER=ON \
-      -DBUILD_MYGUI_PLUGIN=ON \
+      -DBUILD_MYGUI_PLUGIN=OFF \
       -DBUILD_OPENMW_MP=OFF \
       -DBUILD_OPENCS=OFF \
       -DBUILD_BSATOOL=OFF \
@@ -67,13 +67,13 @@ build() {
       -DBUILD_ESSIMPORTER=OFF \
       -DBUILD_LAUNCHER=OFF \
       -DBUILD_MWINIIMPORTER=OFF \
-      -DBUILD_WIZARD=OFF"
+      -DBUILD_WIZARD=OFF
   make -j$CORES
 }
 
 package() {
   echo "${srcdir}/${pkgname%-git}"
   cd "${srcdir}/${pkgname%-git}"
-  make DESTDIR="$pkgdir" install
+  make DESTDIR="${pkgdir}" install
 }
 # vim:set ts=2 sw=2 et:
