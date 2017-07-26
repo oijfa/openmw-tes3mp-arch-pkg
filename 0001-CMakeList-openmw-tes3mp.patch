@@ -32,9 +32,32 @@ index 1b3a7f557..3e83f9f41 100644
      IF(BUILD_OPENCS)
          INSTALL(FILES "${OpenMW_BINARY_DIR}/openmw-cs.desktop" DESTINATION "${DATAROOTDIR}/applications" COMPONENT "opencs")
          INSTALL(FILES "${OpenMW_SOURCE_DIR}/files/opencs/openmw-cs.png" DESTINATION "${ICONDIR}" COMPONENT "opencs")
-diff --git a/files/tes3mp.appdata.xml b/files/tes3mp.appdata.xml
+diff --git a/files/launcher/images/tes3mp.png b/files/launcher/images/tes3mp.png
+new file mode 100644
+index 000000000..7a5393821
+Binary files /dev/null and b/files/launcher/images/tes3mp.png differ
+diff --git a/files/openmw.desktop b/files/openmw.desktop
+deleted file mode 100644
+index 36d01b33e..000000000
+--- a/files/openmw.desktop
++++ /dev/null
+@@ -1,10 +0,0 @@
+-[Desktop Entry]
+-Type=Application
+-Name=OpenMW Launcher
+-GenericName=Role Playing Game
+-Comment=An engine replacement for The Elder Scrolls III: Morrowind
+-Keywords=Morrowind;Reimplementation Mods;esm;bsa;
+-TryExec=openmw-launcher
+-Exec=openmw-launcher
+-Icon=openmw
+-Categories=Game;RolePlaying;
+diff --git a/files/openmw.appdata.xml b/files/tes3mp.appdata.xml
+similarity index 95%
+rename from files/openmw.appdata.xml
+rename to files/tes3mp.appdata.xml
 index 1c16cb9a4..d5214909d 100644
---- a/files/tes3mp.appdata.xml
+--- a/files/openmw.appdata.xml
 +++ b/files/tes3mp.appdata.xml
 @@ -1,10 +1,10 @@
  <?xml version="1.0" encoding="UTF-8"?>
@@ -50,21 +73,15 @@ index 1c16cb9a4..d5214909d 100644
   <description>
    <p>
 diff --git a/files/tes3mp.desktop b/files/tes3mp.desktop
-index 36d01b33e..b5484dcc0 100644
---- a/files/tes3mp.desktop
+new file mode 100644
+index 000000000..b5484dcc0
+--- /dev/null
 +++ b/files/tes3mp.desktop
-@@ -1,10 +1,10 @@
- [Desktop Entry]
- Type=Application
--Name=OpenMW Launcher
+@@ -0,0 +1,10 @@
++[Desktop Entry]
++Type=Application
 +Name=tes3mp Browser
- GenericName=Role Playing Game
--Comment=An engine replacement for The Elder Scrolls III: Morrowind
--Keywords=Morrowind;Reimplementation Mods;esm;bsa;
--TryExec=openmw-launcher
--Exec=openmw-launcher
--Icon=openmw
--Categories=Game;RolePlaying;
++GenericName=Role Playing Game
 +Comment=A multiplayer engine replacement for The Elder Scrolls III: Morrowind
 +Keywords=Morrowind;Reimplementation Mods;esm;bsa;multiplayer
 +TryExec=tes3mp-browser

@@ -1,7 +1,7 @@
 # PKGBUILD source: https://github.com/oijfa/openmw-tes3mp-arch-pkg
 
 pkgname=openmw-tes3mp
-pkgver=openmw.0.39.0.3225.gad9fa0631
+pkgver=openmw.0.39.0.3275.gcd8d06476
 pkgrel=1
 pkgdesc="An open-source engine reimplementation for the role-playing game Morrowind with multiplayer support."
 arch=('i686' 'x86_64')
