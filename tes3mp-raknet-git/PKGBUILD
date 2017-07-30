@@ -1,3 +1,4 @@
+
 pkgname=tes3mp-raknet-git
 pkgver=r108.9ace90a
 pkgrel=1
@@ -9,16 +10,17 @@ depends=('gcc-libs')
 makedepends=('cmake')
 provides=('raknet')
 conflicts=('raknet' 'raknet-git' 'raknet-3.261')
-source=("https://github.com/TES3MP/RakNet.git")
+#source=("git+https://github.com/OculusVR/RakNet.git")
+source=("git+https://github.com/TES3MP/RakNet.git")
 md5sums=('SKIP')
 
 pkgver() {
-  cd "${srcdir}/RakNet"
+  cd "$srcdir/RakNet"
   printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 prepare () {
-  cd "${srcdir}/RakNet"
+  cd ${srcdir}/RakNet
 
   # enable LIBCAT_SECURITY features
   #sed -i -e s@//#define@#define@g Source/NativeFeatureIncludesOverrides.h
@@ -47,8 +49,8 @@ package()
   install -D -m644 LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
   mkdir "${pkgdir}"/usr/lib/
   mkdir "${pkgdir}"/usr/lib/raknet
-  cp "${srcdir}"/RakNet/build/Lib/LibStatic/libRakNetLibStatic.a "${pkgdir}"/usr/lib/raknet
+  cp "${srcdir}"/RakNet/build/lib/libRakNetLibStatic.a "${pkgdir}"/usr/lib/raknet
   install -d "${pkgdir}"/usr/{lib,include/raknet}
-  cp build/Lib/DLL/libRakNetDLL.so "${pkgdir}"/usr/lib/
+  cp build/lib/libRakNetDLL.so "${pkgdir}"/usr/lib/
   install -m644 Source/*.h "${pkgdir}"/usr/include/raknet/
 }
