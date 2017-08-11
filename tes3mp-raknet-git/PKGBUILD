@@ -9,7 +9,7 @@ depends=('gcc-libs')
 makedepends=('cmake')
 provides=('raknet')
 conflicts=('raknet' 'raknet-git' 'raknet-3.261')
-source=("git+https://github.com/TES3MP/RakNet.git")
+source=("git+https://github.com/tes3mp/RakNet.git")
 md5sums=('SKIP')
 
 pkgver() {
@@ -17,15 +17,7 @@ pkgver() {
   printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
-prepare () {
-  cd "${srcdir}/RakNet"
 
-  # enable LIBCAT_SECURITY features
-  #sed -i -e s@//#define@#define@g Source/NativeFeatureIncludesOverrides.h
-  
-  #add -fpermissive build option
-  sed -i "s/project(RakNet)/project(RakNet)\r\nset(CMAKE_CXX_FLAGS \"-fpermissive -std=c++0x\")/" CMakeLists.txt
-}
 
 build()
 {
@@ -35,20 +27,16 @@ build()
     -DRAKNET_ENABLE_DLL=ON \
     -DRAKNET_ENABLE_SAMPLES=OFF \
     -DRAKNET_ENABLE_STATIC=ON \
-    -DRAKNET_GENERATE_INCLUDE_ONLY_DIR=ON ..
+    ..
   make 
 }
 
 package()
 {
-  cd ${srcdir}/RakNet
-
   # DESTDIR is not used correctly so copy library and its headers manually
-  install -D -m644 LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
-  mkdir "${pkgdir}"/usr/lib/
-  mkdir "${pkgdir}"/usr/lib/raknet
-  cp "${srcdir}"/RakNet/build/lib/libRakNetLibStatic.a "${pkgdir}"/usr/lib/raknet
   install -d "${pkgdir}"/usr/{lib,include}/raknet
-  cp "${srcdir}"/RakNet/build/lib/libRakNetDLL.so "${pkgdir}"/usr/lib/
-  install -m644 Source/*.h "${pkgdir}"/usr/include/raknet/
+  install -D -m644 ${srcdir}/RakNet/LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
+  install -Dm644 "${srcdir}"/RakNet/include/raknet/*.h "${pkgdir}"/usr/include/raknet
+  install -m644 "${srcdir}"/RakNet/build/lib/libRakNetDLL.so "${pkgdir}"/usr/lib/raknet
+  install -m644 "${srcdir}"/RakNet/build/lib/libRakNetLibStatic.a "${pkgdir}"/usr/lib/raknet
 }

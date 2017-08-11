@@ -1,14 +1,14 @@
 # PKGBUILD source: https://github.com/oijfa/openmw-tes3mp-arch-pkg
 
 pkgname=openmw-tes3mp
-pkgver=openmw.0.39.0.3306.g73118ea57
+pkgver=openmw.0.39.0.3312.gd7cbfc98e
 pkgrel=1
 pkgdesc="An open-source engine reimplementation for the role-playing game Morrowind with multiplayer support."
 arch=('i686' 'x86_64')
 url="http://www.openmw.org"
 license=('GPL3' 'MIT' 'custom')
 
-depends=('openal' 'openscenegraph' 'mygui>=3.2.1' 'bullet' 'qt5-base' 'ffmpeg' 'sdl2' 'unshield' 'libxkbcommon-x11' 'raknet-git' 'terra-git' 'libtinfo') #add openmw after conflicts resolved
+depends=('unzip' 'openal' 'openscenegraph' 'mygui>=3.2.1' 'bullet' 'qt5-base' 'ffmpeg' 'sdl2' 'unshield' 'libxkbcommon-x11' 'tes3mp-raknet-git' 'terra-git' 'libtinfo') #add openmw after conflicts resolved
 makedepends=('git' 'cmake' 'boost')
 
 source=('git://github.com/TES3MP/openmw-tes3mp.git')
